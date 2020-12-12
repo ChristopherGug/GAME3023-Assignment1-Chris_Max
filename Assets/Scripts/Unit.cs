@@ -36,7 +36,7 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponentInParent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()

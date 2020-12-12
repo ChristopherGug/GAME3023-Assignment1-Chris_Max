@@ -10,7 +10,8 @@ public enum BattleState
     PLAYERTURN,
     ENEMYTURN,
     WIN,
-    LOSE
+    LOSE,
+    ESCAPE
 }
 
 public class BattleSystem : MonoBehaviour
@@ -99,7 +100,12 @@ public class BattleSystem : MonoBehaviour
     {
         enemyUI.SetHP(enemyUnit.currentHP);
         playerUI.SetMP(playerUnit.currentMP);
-       
+
+        yield return new WaitForSeconds(0.5f);
+
+        playerUnit.animator.SetBool("Idle", true);
+        playerUnit.animator.SetBool("Attacking", false);
+
         if (enemyUnit.currentHP <= 0)
         {
             win = true;
@@ -138,6 +144,9 @@ public class BattleSystem : MonoBehaviour
         enemyUI.SetHP(enemyUnit.currentHP);
 
         battleText.text = "You used: " + ability.abilityName;
+
+        playerUnit.animator.SetBool("Idle", false);
+        playerUnit.animator.SetBool("Attacking", true);
 
         StartCoroutine(PlayerMove());
 
@@ -268,6 +277,47 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(Struggle());
     }
 
+    IEnumerator Flee()
+    {
+        chanceToFlee = (3 / playerUnit.currentHP) * 100;
+
+        int random = Random.Range(0, 101);
+
+        battleText.text = "You try to flee...";
+
+        yield return new WaitForSeconds(1f);
+
+        if (random <= chanceToFlee)
+        {
+            enemyUnit.TakeDamage(enemyUnit.currentHP);
+            enemyUI.SetHP(enemyUnit.currentHP);
+
+            battleText.text = "You flee successfully!";
+            currentState = BattleState.ESCAPE;
+
+            yield return new WaitForSeconds(2f);
+            EndBattle();
+        }
+
+        else if (random > chanceToStruggle)
+        {
+            battleText.text = "You fail to flee!";
+            currentState = BattleState.ENEMYTURN;
+
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(EnemyTurn());
+        }
+    }
+    public void OnFleeButton()
+    {
+        if (currentState != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+
+        StartCoroutine(Flee());
+    }
+
     IEnumerator EnemyTurn()
     {
         battleText.text = enemyUnit.unitName + "'s turn!";
@@ -376,6 +426,14 @@ public class BattleSystem : MonoBehaviour
         {
             battleText.text = "You have died...";
         }
+        else if (currentState == BattleState.ESCAPE)
+        {
+            battleText.text = "You run away.";
+        }
     }
 
+    //IEnumerator ReceiveAbility()
+    //{
+
+    //}
 }

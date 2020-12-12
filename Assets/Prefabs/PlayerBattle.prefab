@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830228230642455243}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.03999996, y: 1.24, z: 0.3178733}
+  m_LocalPosition: {x: 0, y: 1.24, z: 0.3178733}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 5827798864715163233}
@@ -239,3 +239,4 @@ MonoBehaviour:
   statusSprite: {fileID: 1433255149541464386}
   fire: {fileID: 5715679701302701091, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
   water: {fileID: -5258647112136669349, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
+  animator: {fileID: 0}
