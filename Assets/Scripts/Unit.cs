@@ -10,4 +10,13 @@ public class Unit : MonoBehaviour
 
     public int maxHP;
     public int currentHP;
+
+    public Effect currectEffect;
+
+    public Ability ability;
+
+    public void TakeDamage(int _damage)
+    {
+        currentHP -= _damage;
+    }
 }

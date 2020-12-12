@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104d188fb35eb684bb35f6940acd9018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: 
+  unitName: Knight Man
   damage: 0
-  maxHP: 0
-  currentHP: 0
+  maxHP: 50
+  currentHP: 50
