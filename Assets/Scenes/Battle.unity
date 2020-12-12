@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 156683434}
   - component: {fileID: 156683433}
   m_Layer: 5
-  m_Name: Health Text
+  m_Name: Mana Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1909,6 +1909,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1892824048}
+  healthText: {fileID: 1279424446}
+  manaText: {fileID: 156683433}
   healthSlider: {fileID: 29004117}
   manaSlider: {fileID: 1262537592}
 --- !u!1 &935102463
@@ -2868,6 +2870,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 303087156}
+  healthText: {fileID: 109157070}
+  manaText: {fileID: 1368188323}
   healthSlider: {fileID: 757101425}
   manaSlider: {fileID: 492040284}
 --- !u!1 &1288498549
@@ -3171,7 +3175,7 @@ GameObject:
   - component: {fileID: 1368188324}
   - component: {fileID: 1368188323}
   m_Layer: 5
-  m_Name: Health Text
+  m_Name: Mana Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3750,7 +3754,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1584882504}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 739733600}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnFleeButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1584882504
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public enum BattleState
 {
@@ -38,7 +39,7 @@ public class BattleSystem : MonoBehaviour
 
     private int enemyAbilityUse;
 
-    public int chanceToFlee,
+    public float chanceToFlee,
                chanceToStruggle;
 
     // Start is called before the first frame update
@@ -52,7 +53,7 @@ public class BattleSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-       Debug.Log("HP: " + enemyUnit.currentHP);
+       
     }
 
     IEnumerator SetupBattle()
@@ -98,8 +99,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerMove()
     {
-        enemyUI.SetHP(enemyUnit.currentHP);
-        playerUI.SetMP(playerUnit.currentMP);
+        enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
+        playerUI.SetMP(playerUnit.currentMP, playerUnit);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -116,11 +117,14 @@ public class BattleSystem : MonoBehaviour
         if (win)
         {
             currentState = BattleState.WIN;
-            EndBattle();
+            StartCoroutine(EndBattle());
         }
         else
         {
             currentState = BattleState.ENEMYTURN;
+
+            StopAllCoroutines();
+
             StartCoroutine(EnemyTurn());
         }
     }
@@ -129,6 +133,12 @@ public class BattleSystem : MonoBehaviour
     {
         currentState = BattleState.PLAYERTURN;
         battleText.text = "Your turn. Choose an action";
+
+        if (playerUnit.currectEffect == Effect.BURN)
+        {
+            playerUnit.TakeDamage(5);
+            playerUI.SetHP(playerUnit.currentHP, playerUnit);
+        }
     }
 
     // For button usage
@@ -141,12 +151,14 @@ public class BattleSystem : MonoBehaviour
 
         ability.Attack("Attack", 5, playerUnit, enemyUnit);
 
-        enemyUI.SetHP(enemyUnit.currentHP);
+        enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
 
         battleText.text = "You used: " + ability.abilityName;
 
         playerUnit.animator.SetBool("Idle", false);
         playerUnit.animator.SetBool("Attacking", true);
+
+        StopAllCoroutines();
 
         StartCoroutine(PlayerMove());
 
@@ -168,8 +180,10 @@ public class BattleSystem : MonoBehaviour
 
             battleText.text = "You used: " + ability.abilityName;
 
-            enemyUI.SetHP(enemyUnit.currentHP);
-            playerUI.SetMP(playerUnit.currentMP);
+            enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
+            playerUI.SetMP(playerUnit.currentMP, playerUnit);
+
+            StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
 
@@ -195,8 +209,10 @@ public class BattleSystem : MonoBehaviour
 
             battleText.text = "You used: " + ability.abilityName;
 
-            enemyUI.SetHP(enemyUnit.currentHP);
-            playerUI.SetMP(playerUnit.currentMP);
+            enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
+            playerUI.SetMP(playerUnit.currentMP, playerUnit);
+
+            StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
 
@@ -222,8 +238,10 @@ public class BattleSystem : MonoBehaviour
 
             battleText.text = "You used: " + ability.abilityName;
 
-            enemyUI.SetHP(enemyUnit.currentHP);
-            playerUI.SetMP(playerUnit.currentMP);
+            enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
+            playerUI.SetMP(playerUnit.currentMP, playerUnit);
+
+            StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
 
@@ -237,34 +255,39 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator Struggle()
     {
-        chanceToStruggle = (3 / enemyUnit.currentHP) * 100;
-
+        chanceToStruggle = (enemyUnit.currentHP / enemyUnit.maxHP) * 100.0f;
+        Debug.Log(chanceToStruggle.ToString());
         int random = Random.Range(0, 101);
 
         battleText.text = "You used Struggle...";
 
         yield return new WaitForSeconds(1f);
 
-        if (random <= chanceToStruggle)
+        if (random > chanceToStruggle)
         {
             enemyUnit.TakeDamage(enemyUnit.currentHP);
-            enemyUI.SetHP(enemyUnit.currentHP);
+            enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
+            Debug.Log("Random roll: " + random.ToString() + "\n Chance: " + chanceToStruggle.ToString());
 
             battleText.text = "Struggle was successful!";
             currentState = BattleState.WIN;
 
             yield return new WaitForSeconds(2f);
-            EndBattle();
+            StartCoroutine(EndBattle());
         }
 
-        else if (random > chanceToStruggle)
+        else if (random <= chanceToStruggle)
         {
             battleText.text = "Struggle failed!";
             currentState = BattleState.ENEMYTURN;
+            Debug.Log("Random roll: " + random.ToString() + "\n Chance: " + chanceToStruggle.ToString());
 
             yield return new WaitForSeconds(2f);
+
+            StopAllCoroutines();
             StartCoroutine(EnemyTurn());
         }
+
     }
 
     public void OnStruggleButton()
@@ -274,12 +297,14 @@ public class BattleSystem : MonoBehaviour
             return;
         }
 
+        StopAllCoroutines();
+
         StartCoroutine(Struggle());
     }
 
     IEnumerator Flee()
     {
-        chanceToFlee = (3 / playerUnit.currentHP) * 100;
+        chanceToFlee = (playerUnit.currentHP / playerUnit.maxHP) * 100;
 
         int random = Random.Range(0, 101);
 
@@ -287,24 +312,26 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        if (random <= chanceToFlee)
+        if (random > chanceToFlee)
         {
             enemyUnit.TakeDamage(enemyUnit.currentHP);
-            enemyUI.SetHP(enemyUnit.currentHP);
+            enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
 
             battleText.text = "You flee successfully!";
             currentState = BattleState.ESCAPE;
 
             yield return new WaitForSeconds(2f);
-            EndBattle();
+            StartCoroutine(EndBattle());
         }
 
-        else if (random > chanceToStruggle)
+        else if (random <= chanceToFlee)
         {
             battleText.text = "You fail to flee!";
             currentState = BattleState.ENEMYTURN;
 
             yield return new WaitForSeconds(2f);
+            StopAllCoroutines();
+
             StartCoroutine(EnemyTurn());
         }
     }
@@ -315,6 +342,8 @@ public class BattleSystem : MonoBehaviour
             return;
         }
 
+        StopAllCoroutines();
+
         StartCoroutine(Flee());
     }
 
@@ -322,79 +351,96 @@ public class BattleSystem : MonoBehaviour
     {
         battleText.text = enemyUnit.unitName + "'s turn!";
 
-        yield return new WaitForSeconds(2f);
-
-        if (playerUnit.currectEffect == Effect.NONE)
+        if (enemyUnit.currectEffect == Effect.BURN)
         {
-            enemyAbilityUse = Random.Range(0, 8);
-            if(enemyAbilityUse <= 5)
-            {
-                ability.Attack("Attack", 3, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse == 6)
-            {
-                ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse == 7)
-            {
-                ability.Cast("Water", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse == 8)
-            {
-                ability.Cast("Lightning", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
-
-            playerUI.SetHP(playerUnit.currentHP);
-            enemyUI.SetMP(enemyUnit.currentMP);
+            enemyUnit.TakeDamage(5);
+            enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
         }
-        else if (playerUnit.currectEffect == Effect.BURN)
-        {
-            enemyAbilityUse = Random.Range(0, 10);
-            if (enemyAbilityUse <= 5)
-            {
-                ability.Attack("Attack", 3, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
-            {
-                ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
-            {
-                ability.Cast("Lightning", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse == 10)
-            {
-                ability.Cast("Water", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
 
-            playerUI.SetHP(playerUnit.currentHP);
-            enemyUI.SetMP(enemyUnit.currentMP);
+        yield return new WaitForSeconds(1f);
+
+        if (enemyUnit.currentMP > 0)
+        {
+            if (playerUnit.currectEffect == Effect.NONE)
+            {
+                enemyAbilityUse = Random.Range(0, 8);
+                if (enemyAbilityUse <= 5)
+                {
+                    ability.Attack("Attack", 3, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse == 6)
+                {
+                    ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse == 7)
+                {
+                    ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse == 8)
+                {
+                    ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
+                }
+                battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
+
+                playerUI.SetHP(playerUnit.currentHP, playerUnit);
+                enemyUI.SetMP(enemyUnit.currentMP, enemyUnit);
+            }
+            else if (playerUnit.currectEffect == Effect.BURN)
+            {
+                enemyAbilityUse = Random.Range(0, 10);
+                if (enemyAbilityUse <= 5)
+                {
+                    ability.Attack("Attack", 3, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
+                {
+                    ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
+                {
+                    ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse == 10)
+                {
+                    ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
+                }
+                battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
+
+                playerUI.SetHP(playerUnit.currentHP, playerUnit);
+                enemyUI.SetMP(enemyUnit.currentMP, enemyUnit);
+            }
+            else if (playerUnit.currectEffect == Effect.WET)
+            {
+                enemyAbilityUse = Random.Range(0, 10);
+                if (enemyAbilityUse <= 5)
+                {
+                    ability.Attack("Attack", 3, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
+                {
+                    ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
+                {
+                    ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
+                }
+                else if (enemyAbilityUse == 10)
+                {
+                    ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+                }
+                battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
+
+                playerUI.SetHP(playerUnit.currentHP, playerUnit);
+                enemyUI.SetMP(enemyUnit.currentMP, enemyUnit);
+            }
         }
-        else if (playerUnit.currectEffect == Effect.WET)
+        else if (enemyUnit.currentMP <= 0)
         {
-            enemyAbilityUse = Random.Range(0, 10);
-            if (enemyAbilityUse <= 5)
-            {
-                ability.Attack("Attack", 3, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
-            {
-                ability.Cast("Water", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
-            {
-                ability.Cast("Lightning", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
-            else if (enemyAbilityUse == 10)
-            {
-                ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
-            }
+            ability.Attack("Attack", 3, enemyUnit, playerUnit);
             battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
 
-            playerUI.SetHP(playerUnit.currentHP);
-            enemyUI.SetMP(enemyUnit.currentMP);
+            playerUI.SetHP(playerUnit.currentHP, playerUnit);
+            enemyUI.SetMP(enemyUnit.currentMP, enemyUnit);
         }
 
         if (playerUnit.currentHP <= 0)
@@ -402,21 +448,25 @@ public class BattleSystem : MonoBehaviour
             loss = true;
         }
 
-
         yield return new WaitForSeconds(2f);
 
         if (loss)
         {
             currentState = BattleState.WIN;
-            EndBattle();
+            StartCoroutine(EndBattle());
         }
         else
         {
+            if (playerUnit.currectEffect == Effect.BURN)
+            {
+                playerUnit.TakeDamage(5);
+            }
+
             PlayerTurn();
         }
     }
 
-    public void EndBattle()
+    IEnumerator EndBattle()
     {
         if (currentState == BattleState.WIN)
         {
@@ -430,10 +480,9 @@ public class BattleSystem : MonoBehaviour
         {
             battleText.text = "You run away.";
         }
+
+        yield return new WaitForSeconds(2f);
+
+        SceneManager.LoadScene("Overworld");
     }
-
-    //IEnumerator ReceiveAbility()
-    //{
-
-    //}
 }

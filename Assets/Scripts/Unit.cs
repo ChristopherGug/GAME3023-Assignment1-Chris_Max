@@ -13,6 +13,8 @@ public class Unit : MonoBehaviour
     public int maxMP;
     public int currentMP;
 
+    public bool takeBurnDamage = false;
+
     public Effect currectEffect;
 
     public SpriteRenderer statusSprite;
