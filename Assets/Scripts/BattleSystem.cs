@@ -18,7 +18,9 @@ public class BattleSystem : MonoBehaviour
     public BattleState currentState;
 
     public GameObject player,
-                      enemy;
+                      enemy1,
+                      enemy2,
+                      enemy3;
     public Transform playerSpawn,
                      enemySpawn;
     Unit playerUnit,
@@ -33,21 +35,55 @@ public class BattleSystem : MonoBehaviour
     private bool win,
                  loss;
 
+    private int enemyAbilityUse;
+
+    public int chanceToFlee,
+               chanceToStruggle;
+
     // Start is called before the first frame update
     void Start()
     {
+        ability = new Ability();
         currentState = BattleState.START;
 
         StartCoroutine(SetupBattle());
     }
 
+    private void LateUpdate()
+    {
+       Debug.Log("HP: " + enemyUnit.currentHP);
+    }
+
     IEnumerator SetupBattle()
     {
+        win = false;
+        loss = false;
+
         GameObject playerGo = Instantiate(player, playerSpawn);
         playerUnit = playerGo.GetComponent<Unit>();
+        GameObject enemyGo;
 
-        GameObject enemyGo = Instantiate(enemy, enemySpawn);
-        enemyUnit = enemyGo.GetComponent<Unit>();
+        int randomNumber = Random.Range(1, 4);
+
+        switch(randomNumber)
+        {
+            case 1:
+                enemyGo = Instantiate(enemy1, enemySpawn);
+                enemyUnit = enemyGo.GetComponent<Unit>();
+                break;
+            case 2:
+                enemyGo = Instantiate(enemy2, enemySpawn);
+                enemyUnit = enemyGo.GetComponent<Unit>();
+                break;
+            case 3:
+                enemyGo = Instantiate(enemy3, enemySpawn);
+                enemyUnit = enemyGo.GetComponent<Unit>();
+                break;
+        }
+
+        playerUnit.currentMP = playerUnit.maxMP;
+        enemyUnit.currentHP = enemyUnit.maxHP;
+        enemyUnit.currentMP = enemyUnit.maxMP;
 
         battleText.text = "A wild " + enemyUnit.unitName + " has entered the battle!";
 
@@ -62,6 +98,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerMove()
     {
         enemyUI.SetHP(enemyUnit.currentHP);
+        playerUI.SetMP(playerUnit.currentMP);
        
         if (enemyUnit.currentHP <= 0)
         {
@@ -78,34 +115,267 @@ public class BattleSystem : MonoBehaviour
         else
         {
             currentState = BattleState.ENEMYTURN;
-            //StartCoroutine(EnemyTurn());
+            StartCoroutine(EnemyTurn());
         }
     }
 
     public void PlayerTurn()
     {
+        currentState = BattleState.PLAYERTURN;
         battleText.text = "Your turn. Choose an action";
     }
 
     // For button usage
     public void OnAttackButton()
     {
-
         if (currentState != BattleState.PLAYERTURN)
         {
             return;
         }
 
-        playerUnit.ability.Attack("Attack", 5, playerUnit, enemyUnit);
+        ability.Attack("Attack", 5, playerUnit, enemyUnit);
 
-        battleText.text = "You used: " + playerUnit.ability.abilityName;
+        enemyUI.SetHP(enemyUnit.currentHP);
+
+        battleText.text = "You used: " + ability.abilityName;
 
         StartCoroutine(PlayerMove());
-        Debug.Log("OnAttackButton Worked");
+
+        //Debug.Log(ability.abilityName);
+    }
+
+    public void OnFireButton()
+    {
+        if (playerUnit.currentMP >= 5)
+        {
+            Debug.Log("OnFireButton Worked");
+
+            if (currentState != BattleState.PLAYERTURN)
+            {
+                return;
+            }
+
+            ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, playerUnit, enemyUnit);
+
+            battleText.text = "You used: " + ability.abilityName;
+
+            enemyUI.SetHP(enemyUnit.currentHP);
+            playerUI.SetMP(playerUnit.currentMP);
+
+            StartCoroutine(PlayerMove());
+
+            //Debug.Log(ability.abilityName);
+        }
+        else
+        {
+            battleText.text = "Not enough mana!";
+        }
+    }
+    public void OnWaterButton()
+    {
+        if (playerUnit.currentMP >= 5)
+        {
+            Debug.Log("OnFireButton Worked");
+
+            if (currentState != BattleState.PLAYERTURN)
+            {
+                return;
+            }
+
+            ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, playerUnit, enemyUnit);
+
+            battleText.text = "You used: " + ability.abilityName;
+
+            enemyUI.SetHP(enemyUnit.currentHP);
+            playerUI.SetMP(playerUnit.currentMP);
+
+            StartCoroutine(PlayerMove());
+
+            //Debug.Log(enemyUnit.currentHP);
+        }
+        else
+        {
+            battleText.text = "Not enough mana!";
+        }
+    }
+    public void OnLightningButton()
+    {
+        if (playerUnit.currentMP >= 5)
+        {
+            //Debug.Log("OnLightningButton Worked");
+
+            if (currentState != BattleState.PLAYERTURN)
+            {
+                return;
+            }
+
+            ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, playerUnit, enemyUnit);
+
+            battleText.text = "You used: " + ability.abilityName;
+
+            enemyUI.SetHP(enemyUnit.currentHP);
+            playerUI.SetMP(playerUnit.currentMP);
+
+            StartCoroutine(PlayerMove());
+
+            //Debug.Log(enemyUnit.currentHP);
+        }
+        else
+        {
+            battleText.text = "Not enough mana!";
+        }
+    }
+
+    IEnumerator Struggle()
+    {
+        chanceToStruggle = (3 / enemyUnit.currentHP) * 100;
+
+        int random = Random.Range(0, 101);
+
+        battleText.text = "You used Struggle...";
+
+        yield return new WaitForSeconds(1f);
+
+        if (random <= chanceToStruggle)
+        {
+            enemyUnit.TakeDamage(enemyUnit.currentHP);
+            enemyUI.SetHP(enemyUnit.currentHP);
+
+            battleText.text = "Struggle was successful!";
+            currentState = BattleState.WIN;
+
+            yield return new WaitForSeconds(2f);
+            EndBattle();
+        }
+
+        else if (random > chanceToStruggle)
+        {
+            battleText.text = "Struggle failed!";
+            currentState = BattleState.ENEMYTURN;
+
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(EnemyTurn());
+        }
+    }
+
+    public void OnStruggleButton()
+    {
+        if (currentState != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+
+        StartCoroutine(Struggle());
+    }
+
+    IEnumerator EnemyTurn()
+    {
+        battleText.text = enemyUnit.unitName + "'s turn!";
+
+        yield return new WaitForSeconds(2f);
+
+        if (playerUnit.currectEffect == Effect.NONE)
+        {
+            enemyAbilityUse = Random.Range(0, 8);
+            if(enemyAbilityUse <= 5)
+            {
+                ability.Attack("Attack", 3, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse == 6)
+            {
+                ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse == 7)
+            {
+                ability.Cast("Water", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse == 8)
+            {
+                ability.Cast("Lightning", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
+
+            playerUI.SetHP(playerUnit.currentHP);
+            enemyUI.SetMP(enemyUnit.currentMP);
+        }
+        else if (playerUnit.currectEffect == Effect.BURN)
+        {
+            enemyAbilityUse = Random.Range(0, 10);
+            if (enemyAbilityUse <= 5)
+            {
+                ability.Attack("Attack", 3, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
+            {
+                ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
+            {
+                ability.Cast("Lightning", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse == 10)
+            {
+                ability.Cast("Water", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
+
+            playerUI.SetHP(playerUnit.currentHP);
+            enemyUI.SetMP(enemyUnit.currentMP);
+        }
+        else if (playerUnit.currectEffect == Effect.WET)
+        {
+            enemyAbilityUse = Random.Range(0, 10);
+            if (enemyAbilityUse <= 5)
+            {
+                ability.Attack("Attack", 3, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
+            {
+                ability.Cast("Water", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
+            {
+                ability.Cast("Lightning", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            else if (enemyAbilityUse == 10)
+            {
+                ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+            }
+            battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
+
+            playerUI.SetHP(playerUnit.currentHP);
+            enemyUI.SetMP(enemyUnit.currentMP);
+        }
+
+        if (playerUnit.currentHP <= 0)
+        {
+            loss = true;
+        }
+
+
+        yield return new WaitForSeconds(2f);
+
+        if (loss)
+        {
+            currentState = BattleState.WIN;
+            EndBattle();
+        }
+        else
+        {
+            PlayerTurn();
+        }
     }
 
     public void EndBattle()
     {
-
+        if (currentState == BattleState.WIN)
+        {
+            battleText.text = "You defeated the " + enemyUnit.unitName;
+        }
+        else if (currentState == BattleState.LOSE)
+        {
+            battleText.text = "You have died...";
+        }
     }
+
 }

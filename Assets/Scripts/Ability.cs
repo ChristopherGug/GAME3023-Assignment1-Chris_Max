@@ -29,6 +29,7 @@ public class Ability : MonoBehaviour
     public string abilityName;
 
     public int damage;
+    public int manaCost;
     public int chanceOfSuccess;
 
     public Type type;
@@ -36,63 +37,74 @@ public class Ability : MonoBehaviour
     public Unit unitCasting;
     public Unit unitReceiving;
 
+
     public void Attack(string _name, int _damage, Unit _unitCasting, Unit _unitReceiving)
     {
-        name = _name;
-        unitReceiving.TakeDamage(5);
+        abilityName = _name;
+        _unitReceiving.TakeDamage(5);
     }
 
     public void Cast(string _name, Effect _effect, Type _type, Spell _spell, Unit _unitCasting, Unit _unitReceiving)
     {
-        name = _name;
-        switch (_effect)
+        abilityName = _name;
+        switch (_unitReceiving.currectEffect)
         {
             case Effect.NONE:
                 if (_spell == Spell.FIRE)
                 {
-                    unitReceiving.TakeDamage(10);
-                    unitReceiving.currectEffect = Effect.BURN;
+                    _unitReceiving.TakeDamage(10);
+                    _unitReceiving.SetEffect(_effect);
+                    _unitCasting.CostMP(5);
                 }
                 else if (_spell == Spell.WATER)
                 {
-                    unitReceiving.TakeDamage(5);
-                    unitReceiving.currectEffect = Effect.WET;
+                    _unitReceiving.TakeDamage(5);
+                    _unitReceiving.SetEffect(_effect);
+                    _unitCasting.CostMP(5);
                 }
                 else if (_spell == Spell.LIGHTNING)
                 {
-                    unitReceiving.TakeDamage(10);
+                    _unitReceiving.TakeDamage(10);
+                    _unitCasting.CostMP(5);
                 }
                 break;
 
             case Effect.WET:
                 if (_spell == Spell.FIRE)
                 {
-                    unitReceiving.TakeDamage(5);
-                    unitReceiving.currectEffect = Effect.NONE;
+                    _unitReceiving.TakeDamage(5);
+                    _unitReceiving.SetEffect(Effect.NONE);
+                    _unitCasting.CostMP(5);
+
                 }
                 else if (_spell == Spell.WATER)
                 {
-                    unitReceiving.TakeDamage(5);
+                    _unitReceiving.TakeDamage(5);
+                    _unitCasting.CostMP(5);
                 }
                 else if (_spell == Spell.LIGHTNING)
                 {
-                    unitReceiving.TakeDamage(30);
+                    _unitReceiving.TakeDamage(30);
+                    _unitCasting.CostMP(5);
                 }
                 break;
 
             case Effect.BURN:
                 if (_spell == Spell.FIRE)
                 {
-                    unitReceiving.TakeDamage(10);
+                    _unitReceiving.TakeDamage(10);
+                    _unitCasting.CostMP(5);
                 }
                 else if (_spell == Spell.WATER)
                 {
-                    unitReceiving.TakeDamage(5);
-                    unitReceiving.currectEffect = Effect.NONE;
+                    _unitReceiving.TakeDamage(5);
+                    _unitReceiving.SetEffect(Effect.NONE);
+                    _unitCasting.CostMP(5);
                 }
                 else if (_spell == Spell.LIGHTNING)
                 {
-                    unitReceiving.TakeDamage(10);
+                    _unitReceiving.TakeDamage(10);
+                    _unitCasting.CostMP(5);
                 }
                 break;
         }
