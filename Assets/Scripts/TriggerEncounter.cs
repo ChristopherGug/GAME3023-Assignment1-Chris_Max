@@ -35,7 +35,7 @@ public class TriggerEncounter : MonoBehaviour
 
     private void TransitionScene()
     {
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
     }
 
     //IEnumerator Fade()
