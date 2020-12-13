@@ -215,9 +215,7 @@ MonoBehaviour:
   currentHP: 50
   maxMP: 10
   currentMP: 10
-  takeBurnDamage: 0
   currectEffect: 0
   statusSprite: {fileID: 4836180336755260463}
-  fire: {fileID: -949555466598364076, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
-  water: {fileID: 6364385501675168117, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
-  animator: {fileID: 0}
+  fire: {fileID: 5715679701302701091, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
+  water: {fileID: -5258647112136669349, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
