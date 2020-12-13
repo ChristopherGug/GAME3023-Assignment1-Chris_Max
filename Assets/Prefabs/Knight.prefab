@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1901862893025007409}
   - component: {fileID: 1901862893025007410}
   m_Layer: 0
-  m_Name: Knight_0
+  m_Name: Knight
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   anim: {fileID: 1901862893025007409}
+  isMoving: 0
 --- !u!50 &1901862893025007408
 Rigidbody2D:
   serializedVersion: 4
@@ -309,7 +310,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901862894354579549}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.011848435, y: -0.05924223, z: 0}
+  m_LocalPosition: {x: -0.011848435, y: -1.16, z: 0}
   m_LocalScale: {x: 0.29621115, y: 0.29621115, z: 0.29621115}
   m_Children: []
   m_Father: {fileID: 1901862893025007422}
@@ -327,13 +328,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LightType: 0
+  m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.506
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.41
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000778e12dcb348e18fc36e9bb7
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -343,7 +344,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightOuterRadius: 2.65
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5

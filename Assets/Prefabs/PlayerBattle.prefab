@@ -328,8 +328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Knight Man
   damage: 0
-  maxHP: 150
-  currentHP: 150
+  maxHP: 80
+  currentHP: 80
   maxMP: 50
   currentMP: 50
   currectEffect: 0
