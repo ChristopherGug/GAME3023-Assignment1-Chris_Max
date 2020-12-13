@@ -105,10 +105,12 @@ public class BattleSystem : MonoBehaviour
 
         if (playerUnit.animator.GetInteger("TypeOfAttack") == 1)
         {
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(playerUnit.animator.GetCurrentAnimatorStateInfo(0).length);
         }
         else
         {
+            yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(spellAnimation.GetCurrentAnimatorStateInfo(0).length);
         }
 
@@ -166,6 +168,8 @@ public class BattleSystem : MonoBehaviour
 
         playerUnit.animator.SetInteger("TypeOfAttack", 1);
 
+        playerUnit.PlaySound(0, 0.5f, 0.5f);
+
         StopAllCoroutines();
 
         StartCoroutine(PlayerMove());
@@ -194,6 +198,8 @@ public class BattleSystem : MonoBehaviour
             playerUnit.animator.SetInteger("TypeOfAttack", 2);
             spellAnimation.SetInteger("Spell", 1);
 
+            playerUnit.PlaySound(1, 0.5f, 0.5f);
+
             StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
@@ -209,8 +215,6 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.currentMP >= 5)
         {
-            Debug.Log("OnFireButton Worked");
-
             if (currentState != BattleState.PLAYERTURN)
             {
                 return;
@@ -226,6 +230,8 @@ public class BattleSystem : MonoBehaviour
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
 
+            playerUnit.PlaySound(2, 0.5f, 0.5f);
+
             StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
@@ -240,9 +246,7 @@ public class BattleSystem : MonoBehaviour
     public void OnLightningButton()
     {
         if (playerUnit.currentMP >= 5)
-        {
-            //Debug.Log("OnLightningButton Worked");
-
+        { 
             if (currentState != BattleState.PLAYERTURN)
             {
                 return;
@@ -258,6 +262,8 @@ public class BattleSystem : MonoBehaviour
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
 
+            playerUnit.PlaySound(3, 0.5f, 0.5f);
+
             StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
@@ -272,19 +278,20 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator Struggle()
     {
-        chanceToStruggle = (enemyUnit.currentHP / enemyUnit.maxHP) * 100.0f;
-        Debug.Log(chanceToStruggle.ToString());
+        chanceToStruggle = ((float)enemyUnit.currentHP / (float)enemyUnit.maxHP) * 100.0f;
         int random = Random.Range(0, 101);
 
         battleText.text = "You used Struggle...";
 
         yield return new WaitForSeconds(1f);
 
+        Debug.Log("Chance to Struggle: " + chanceToStruggle.ToString() +
+                  "\nRoll: " + random.ToString());
+
         if (random > chanceToStruggle)
         {
             enemyUnit.TakeDamage(enemyUnit.currentHP);
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
-            Debug.Log("Random roll: " + random.ToString() + "\n Chance: " + chanceToStruggle.ToString());
 
             battleText.text = "Struggle was successful!";
             currentState = BattleState.WIN;
@@ -297,7 +304,6 @@ public class BattleSystem : MonoBehaviour
         {
             battleText.text = "Struggle failed!";
             currentState = BattleState.ENEMYTURN;
-            Debug.Log("Random roll: " + random.ToString() + "\n Chance: " + chanceToStruggle.ToString());
 
             yield return new WaitForSeconds(2f);
 
@@ -321,13 +327,16 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator Flee()
     {
-        chanceToFlee = (playerUnit.currentHP / playerUnit.maxHP) * 100;
+        chanceToFlee = ((float)playerUnit.currentHP / (float)playerUnit.maxHP) * 100;
 
         int random = Random.Range(0, 101);
 
         battleText.text = "You try to flee...";
 
         yield return new WaitForSeconds(1f);
+
+        Debug.Log("Chance to Flee: " + chanceToFlee.ToString() +
+                  "\nRoll: " + random.ToString());
 
         if (random > chanceToFlee)
         {
@@ -384,24 +393,29 @@ public class BattleSystem : MonoBehaviour
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 1);
+
+                    enemyUnit.PlaySound(0, 0, 0.5f);
                 }
                 else if (enemyAbilityUse == 6)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
+                    enemyUnit.PlaySound(1, 0.5f, 0.5f);
                 }
                 else if (enemyAbilityUse == 7)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
+                    enemyUnit.PlaySound(2, 0.5f, 0.5f);
                 }
                 else if (enemyAbilityUse == 8)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 4);
                     spellAnimation.SetInteger("Spell", 6);
+                    enemyUnit.PlaySound(3, 0.5f, 0.5f);
                 }
                 battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
 
@@ -415,24 +429,28 @@ public class BattleSystem : MonoBehaviour
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 1);
+                    enemyUnit.PlaySound(0, 0, 0.5f);
                 }
                 else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
+                    enemyUnit.PlaySound(1, 0.5f, 0.5f);
                 }
                 else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 4);
                     spellAnimation.SetInteger("Spell", 6);
+                    enemyUnit.PlaySound(3, 0.5f, 0.5f);
                 }
                 else if (enemyAbilityUse == 10)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
+                    enemyUnit.PlaySound(2, 0.5f, 0.5f);
                 }
                 battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
 
@@ -441,29 +459,33 @@ public class BattleSystem : MonoBehaviour
             }
             else if (playerUnit.currectEffect == Effect.WET)
             {
-                enemyAbilityUse = Random.Range(0, 10);
+                enemyAbilityUse = Random.Range(0, 12);
                 if (enemyAbilityUse <= 5)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 1);
+                    enemyUnit.PlaySound(0, 0, 0.5f);
                 }
                 else if (enemyAbilityUse > 5 || enemyAbilityUse <= 6)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
+                    enemyUnit.PlaySound(2, 0.5f, 0.5f);
                 }
-                else if (enemyAbilityUse > 6 || enemyAbilityUse <= 9)
+                else if (enemyAbilityUse > 6 || enemyAbilityUse <= 11)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 4);
                     spellAnimation.SetInteger("Spell", 6);
+                    enemyUnit.PlaySound(3, 0.5f, 0.5f);
                 }
-                else if (enemyAbilityUse == 10)
+                else if (enemyAbilityUse == 12)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
+                    enemyUnit.PlaySound(1, 0.5f, 0.5f);
                 }
                 battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
 
@@ -485,7 +507,16 @@ public class BattleSystem : MonoBehaviour
             loss = true;
         }
 
-        yield return new WaitForSeconds(2f);
+        if (enemyUnit.animator.GetInteger("TypeOfAttack") == 1)
+        {
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(enemyUnit.animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else
+        {
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(spellAnimation.GetCurrentAnimatorStateInfo(0).length);
+        }
 
         spellAnimation.SetInteger("Spell", 0);
         enemyUnit.animator.SetInteger("TypeOfAbility", 0);

@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveVector;
     private bool lookLeft = false;
 
+    public bool isMoving = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,22 +28,29 @@ public class PlayerController : MonoBehaviour
         {
             lookLeft = false;
             SoundManager.moving = true;
+            isMoving = true;
         }
         else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             lookLeft = true;
             SoundManager.moving = true;
+            isMoving = true;
         }
         else if (Input.GetAxisRaw("Vertical") > 0)
         {
             SoundManager.moving = true;
+            isMoving = true;
         }
         else if (Input.GetAxisRaw("Vertical") < 0)
         {
             SoundManager.moving = true;
+            isMoving = true;
         }
         else
+        {
             SoundManager.moving = false;
+            isMoving = false;
+        }
 
         anim.SetFloat("Horizontal", moveVector.x);
         anim.SetFloat("Vertical", moveVector.y);

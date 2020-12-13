@@ -9,6 +9,7 @@ public class TriggerEncounter : MonoBehaviour
     private int randomNumber;
     public Saving saveFile;
 
+    public PlayerController playerController;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class TriggerEncounter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "GrassTrigger")
+        if (other.tag == "GrassTrigger" && playerController.isMoving)
         {
             Debug.Log("werghwerg");
             randomNumber = Random.Range(0, encounterChance);

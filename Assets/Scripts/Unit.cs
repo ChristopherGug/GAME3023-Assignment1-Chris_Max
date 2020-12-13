@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour
                   water;
 
     public Animator animator;
+    public AudioSource audioSource;
+    public AudioClip[] audioClips;
 
     public void SetEffect(Effect _effect)
     {
@@ -39,6 +41,7 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void Update()
@@ -59,5 +62,13 @@ public class Unit : MonoBehaviour
                 statusSprite.sprite = water;
                 break;
         }
+    }
+
+    public void PlaySound(int _clip, float _startTime, float _volume)
+    {
+        audioSource.clip = audioClips[_clip];
+        audioSource.time = _startTime;
+        audioSource.volume = _volume;
+        audioSource.Play();
     }
 }
