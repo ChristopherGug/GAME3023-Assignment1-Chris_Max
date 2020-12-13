@@ -1768,6 +1768,10 @@ MonoBehaviour:
   ability: {fileID: 0}
   chanceToFlee: 0
   chanceToStruggle: 0
+<<<<<<< HEAD
+=======
+  spellAnimation: {fileID: 1682889202}
+>>>>>>> parent of 5d8f5c8... merging
 --- !u!1 &757101423
 GameObject:
   m_ObjectHideFlags: 0
@@ -3333,7 +3337,11 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_AnchoredPosition: {x: 155, y: -31}
+=======
+  m_AnchoredPosition: {x: 155, y: -30.99997}
+>>>>>>> parent of 5d8f5c8... merging
 =======
   m_AnchoredPosition: {x: 155, y: -30.99997}
 >>>>>>> parent of 5d8f5c8... merging
@@ -4103,7 +4111,11 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_AnchoredPosition: {x: 35, y: -31}
+=======
+  m_AnchoredPosition: {x: 35, y: -30.99997}
+>>>>>>> parent of 5d8f5c8... merging
 =======
   m_AnchoredPosition: {x: 35, y: -30.99997}
 >>>>>>> parent of 5d8f5c8... merging
