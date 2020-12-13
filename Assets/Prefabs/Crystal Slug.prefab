@@ -231,10 +231,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Crystal Slug
   damage: 0
-  maxHP: 50
-  currentHP: 50
-  maxMP: 10
-  currentMP: 10
+  maxHP: 35
+  currentHP: 35
+  maxMP: 50
+  currentMP: 50
   currectEffect: 0
   statusSprite: {fileID: 4836180336755260463}
   fire: {fileID: -949555466598364076, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
