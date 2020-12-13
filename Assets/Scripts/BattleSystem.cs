@@ -49,7 +49,6 @@ public class BattleSystem : MonoBehaviour
     {
         ability = new Ability();
         currentState = BattleState.START;
-
         StartCoroutine(SetupBattle());
     }
 
@@ -524,7 +523,8 @@ public class BattleSystem : MonoBehaviour
 
         if (loss)
         {
-            currentState = BattleState.WIN;
+            currentState = BattleState.LOSE;
+
             StartCoroutine(EndBattle());
         }
         else

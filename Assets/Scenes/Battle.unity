@@ -1884,6 +1884,7 @@ GameObject:
   - component: {fileID: 739733599}
   - component: {fileID: 739733600}
   - component: {fileID: 739733601}
+  - component: {fileID: 739733602}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1917,6 +1918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6154127e73b930c4dbfdba45368a4606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveFile: {fileID: 0}
   currentState: 0
   player: {fileID: 8452904813943415985, guid: fb3733067af035f42addcdf3edbfc6e3, type: 3}
   enemy1: {fileID: 8214181392081101390, guid: 91bc63af2e60d734d8add64bef2fa36b, type: 3}
@@ -1944,6 +1946,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inBattle: 1
+--- !u!114 &739733602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739733598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a969239468db6c6438588b10e1ff705f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPosition: {fileID: 0}
 --- !u!1 &757101423
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
 
-    public static AudioClip playerWalkSound;
+    public AudioClip playerWalkSound;
     static AudioSource audioSource;
     public static bool moving;
 
@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerWalkSound = Resources.Load<AudioClip>("walk");
+        //playerWalkSound = Resources.Load<AudioClip>("walk");
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -31,7 +31,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound()
     {
-        if (audioCount >= 80)
+        if (audioCount >= 60)
         {
             audioSource.PlayOneShot(playerWalkSound);
             audioCount = 0;

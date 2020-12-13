@@ -197,11 +197,6 @@ PrefabInstance:
       objectReference: {fileID: 1287610}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 931af65045d7271448c896f2562297ca, type: 3}
---- !u!4 &1287607 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1901862893025007422, guid: 9e4fafa551a35034fb360a6ca49bb4ce, type: 3}
-  m_PrefabInstance: {fileID: 1901862893026226825}
-  m_PrefabAsset: {fileID: 0}
 --- !u!50 &1287609 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 1901862893025007408, guid: 9e4fafa551a35034fb360a6ca49bb4ce, type: 3}
@@ -1540,6 +1535,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1608408056372137918, guid: 931af65045d7271448c896f2562297ca, type: 3}
   m_PrefabInstance: {fileID: 1886385882}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &148174173 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1901862893025007422, guid: 9e4fafa551a35034fb360a6ca49bb4ce, type: 3}
+  m_PrefabInstance: {fileID: 1901862893026226825}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &164976539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2483,13 +2483,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.498
+  m_Volume: 0.278
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 150
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -2593,6 +2593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e0faf207b2cc641acde0561db4ca81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerWalkSound: {fileID: 8300000, guid: 4eb6d52321503ee42a56cdf05c5f6639, type: 3}
 --- !u!1001 &240278145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27925,7 +27926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a969239468db6c6438588b10e1ff705f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPosition: {fileID: 1287607}
+  playerPosition: {fileID: 148174173}
 --- !u!4 &1814039671
 Transform:
   m_ObjectHideFlags: 0
