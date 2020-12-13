@@ -1,7 +1,106 @@
 fileFormatVersion: 2
 guid: 36be8ec9dc389fe4c8a241813bca2985
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5523513482891055334
+    second: LittleGirl_0
+  - first:
+      213: 1355910506890693812
+    second: LittleGirl_1
+  - first:
+      213: -8899164465351331614
+    second: LittleGirl_2
+  - first:
+      213: 5078207391586993119
+    second: LittleGirl_3
+  - first:
+      213: -1195638089461578924
+    second: LittleGirl_4
+  - first:
+      213: -2089912791891172717
+    second: LittleGirl_5
+  - first:
+      213: 4208272408743271658
+    second: LittleGirl_6
+  - first:
+      213: 809326964252308578
+    second: LittleGirl_7
+  - first:
+      213: -2631754168394081382
+    second: LittleGirl_8
+  - first:
+      213: 4620852109079319243
+    second: LittleGirl_9
+  - first:
+      213: -4774011991266901587
+    second: LittleGirl_10
+  - first:
+      213: -4216890592160594359
+    second: LittleGirl_11
+  - first:
+      213: -7392311571792377641
+    second: LittleGirl_12
+  - first:
+      213: -55842754554723402
+    second: LittleGirl_13
+  - first:
+      213: -1991481463934956455
+    second: LittleGirl_14
+  - first:
+      213: -7716861454751440822
+    second: LittleGirl_15
+  - first:
+      213: -3298503458877196975
+    second: LittleGirl_0
+  - first:
+      213: 2986198643071076698
+    second: LittleGirl_1
+  - first:
+      213: 5913242332851358652
+    second: LittleGirl_2
+  - first:
+      213: 6746676663481465399
+    second: LittleGirl_3
+  - first:
+      213: -2576817205383570280
+    second: LittleGirl_4
+  - first:
+      213: -1353347888959348647
+    second: LittleGirl_5
+  - first:
+      213: -1874377170441483681
+    second: LittleGirl_6
+  - first:
+      213: -666445084706184143
+    second: LittleGirl_7
+  - first:
+      213: -2939466949684620922
+    second: LittleGirl_8
+  - first:
+      213: 1364029030680580000
+    second: LittleGirl_9
+  - first:
+      213: 1995161147137156709
+    second: LittleGirl_10
+  - first:
+      213: 2172489009901291462
+    second: LittleGirl_11
+  - first:
+      213: 8386454798632718688
+    second: LittleGirl_12
+  - first:
+      213: 1367004601873745641
+    second: LittleGirl_13
+  - first:
+      213: 1493209484725490282
+    second: LittleGirl_14
+  - first:
+      213: 5438148046937011453
+    second: LittleGirl_15
+  - first:
+      213: -2435023846733149967
+    second: LittleGirl_16
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,7 +140,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -123,7 +222,364 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: LittleGirl_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1553a33949c5932d0800000000000000
+      internalID: -3298503458877196975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a59410528db117920800000000000000
+      internalID: 2986198643071076698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbb4860729e001250800000000000000
+      internalID: 5913242332851358652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73afa351ea201ad50800000000000000
+      internalID: 6746676663481465399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89c5ffd776e4d3cd0800000000000000
+      internalID: -2576817205383570280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 950ad0de341f73de0800000000000000
+      internalID: -1353347888959348647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_6
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5acbb4f4efdcf5e0800000000000000
+      internalID: -1874377170441483681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13468c7f9bf40c6f0800000000000000
+      internalID: -666445084706184143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6811c0b126ae437d0800000000000000
+      internalID: -2939466949684620922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af490d2d210ee210800000000000000
+      internalID: 1364029030680580000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_10
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56665c41e7c30bb10800000000000000
+      internalID: 1995161147137156709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_11
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c74b918e3b362e10800000000000000
+      internalID: 2172489009901291462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0619f5db43ca26470800000000000000
+      internalID: 8386454798632718688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_13
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e64205517398f210800000000000000
+      internalID: 1367004601873745641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a629e407d12f8b410800000000000000
+      internalID: 1493209484725490282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_15
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df43aad06de287b40800000000000000
+      internalID: 5438148046937011453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LittleGirl_16
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f88dd376be053ed0800000000000000
+      internalID: -2435023846733149967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

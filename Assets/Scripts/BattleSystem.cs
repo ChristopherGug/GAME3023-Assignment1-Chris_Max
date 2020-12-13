@@ -101,9 +101,11 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerMove()
     {
+        Debug.Log((playerUnit.animator.GetInteger("TypeOfAttack")).ToString());
+
         if (playerUnit.animator.GetInteger("TypeOfAttack") == 1)
         {
-            yield return new WaitForSeconds(playerUnit.animator.GetCurrentAnimatorStateInfo(0).length);
+            yield return new WaitForSeconds(1.3f);
         }
         else
         {
@@ -381,20 +383,24 @@ public class BattleSystem : MonoBehaviour
                 if (enemyAbilityUse <= 5)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 1);
                 }
                 else if (enemyAbilityUse == 6)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
                 }
                 else if (enemyAbilityUse == 7)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
                 }
                 else if (enemyAbilityUse == 8)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 4);
                     spellAnimation.SetInteger("Spell", 6);
                 }
                 battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
@@ -408,20 +414,24 @@ public class BattleSystem : MonoBehaviour
                 if (enemyAbilityUse <= 5)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 1);
                 }
                 else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
                 }
                 else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 4);
                     spellAnimation.SetInteger("Spell", 6);
                 }
                 else if (enemyAbilityUse == 10)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
                 }
                 battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
@@ -435,20 +445,24 @@ public class BattleSystem : MonoBehaviour
                 if (enemyAbilityUse <= 5)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 1);
                 }
                 else if (enemyAbilityUse > 5 || enemyAbilityUse <= 6)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
                 }
                 else if (enemyAbilityUse > 6 || enemyAbilityUse <= 9)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 4);
                     spellAnimation.SetInteger("Spell", 6);
                 }
                 else if (enemyAbilityUse == 10)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
+                    enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
                 }
                 battleText.text = enemyUnit.unitName + " used " + ability.abilityName;
@@ -472,6 +486,10 @@ public class BattleSystem : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2f);
+
+        spellAnimation.SetInteger("Spell", 0);
+        enemyUnit.animator.SetInteger("TypeOfAbility", 0);
+
 
         if (loss)
         {
