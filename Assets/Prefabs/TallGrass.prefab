@@ -112,5 +112,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55537b73b622f044b9712f66796603d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  encounterChance: 15
-  saveFile: {fileID: 0}
+  encounterChance: 10
