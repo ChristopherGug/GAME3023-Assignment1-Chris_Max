@@ -42,6 +42,8 @@ public class BattleSystem : MonoBehaviour
     public float chanceToFlee,
                chanceToStruggle;
 
+    public Animator spellAnimation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -99,13 +101,20 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerMove()
     {
+        if (playerUnit.animator.GetInteger("TypeOfAttack") == 1)
+        {
+            yield return new WaitForSeconds(playerUnit.animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else
+        {
+            yield return new WaitForSeconds(spellAnimation.GetCurrentAnimatorStateInfo(0).length);
+        }
+
         enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
         playerUI.SetMP(playerUnit.currentMP, playerUnit);
 
-        yield return new WaitForSeconds(0.5f);
-
-        playerUnit.animator.SetBool("Idle", true);
-        playerUnit.animator.SetBool("Attacking", false);
+        playerUnit.animator.SetInteger("TypeOfAttack", 0);
+        spellAnimation.SetInteger("Spell", 0);
 
         if (enemyUnit.currentHP <= 0)
         {
@@ -151,12 +160,9 @@ public class BattleSystem : MonoBehaviour
 
         ability.Attack("Attack", 5, playerUnit, enemyUnit);
 
-        enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
-
         battleText.text = "You used: " + ability.abilityName;
 
-        playerUnit.animator.SetBool("Idle", false);
-        playerUnit.animator.SetBool("Attacking", true);
+        playerUnit.animator.SetInteger("TypeOfAttack", 1);
 
         StopAllCoroutines();
 
@@ -183,6 +189,9 @@ public class BattleSystem : MonoBehaviour
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
 
+            playerUnit.animator.SetInteger("TypeOfAttack", 2);
+            spellAnimation.SetInteger("Spell", 1);
+
             StopAllCoroutines();
 
             StartCoroutine(PlayerMove());
@@ -208,6 +217,8 @@ public class BattleSystem : MonoBehaviour
             ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, playerUnit, enemyUnit);
 
             battleText.text = "You used: " + ability.abilityName;
+
+            playerUnit.animator.SetInteger("TypeOfAttack", 3);
 
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
@@ -237,6 +248,8 @@ public class BattleSystem : MonoBehaviour
             ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, playerUnit, enemyUnit);
 
             battleText.text = "You used: " + ability.abilityName;
+
+            playerUnit.animator.SetInteger("TypeOfAttack", 4);
 
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
@@ -314,7 +327,6 @@ public class BattleSystem : MonoBehaviour
 
         if (random > chanceToFlee)
         {
-            enemyUnit.TakeDamage(enemyUnit.currentHP);
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
 
             battleText.text = "You flee successfully!";
@@ -416,11 +428,11 @@ public class BattleSystem : MonoBehaviour
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                 }
-                else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
+                else if (enemyAbilityUse > 5 || enemyAbilityUse <= 6)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
                 }
-                else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
+                else if (enemyAbilityUse > 6 || enemyAbilityUse <= 9)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                 }
