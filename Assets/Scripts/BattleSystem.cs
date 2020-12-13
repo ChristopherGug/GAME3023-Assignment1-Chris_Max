@@ -219,6 +219,7 @@ public class BattleSystem : MonoBehaviour
             battleText.text = "You used: " + ability.abilityName;
 
             playerUnit.animator.SetInteger("TypeOfAttack", 3);
+            spellAnimation.SetInteger("Spell", 3);
 
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
@@ -250,6 +251,7 @@ public class BattleSystem : MonoBehaviour
             battleText.text = "You used: " + ability.abilityName;
 
             playerUnit.animator.SetInteger("TypeOfAttack", 4);
+            spellAnimation.SetInteger("Spell", 5);
 
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
             playerUI.SetMP(playerUnit.currentMP, playerUnit);
