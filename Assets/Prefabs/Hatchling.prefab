@@ -92,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8033200669712189225}
   - component: {fileID: 8033200669712189226}
+  - component: {fileID: 8465022901795654606}
   m_Layer: 0
   m_Name: Crystal Slug Body
   m_TagString: Untagged
@@ -153,17 +154,36 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e57f8b21c913b841891a636eb85ef37, type: 3}
+  m_Sprite: {fileID: 7723652632321733531, guid: 7e57f8b21c913b841891a636eb85ef37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.37}
+  m_Size: {x: 0.75, y: 0.578125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8465022901795654606
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033200669712189227}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1957b3f85433aa646ad2712950b17efa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8214181392081101390
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,11 +231,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Hatchling
   damage: 0
-  maxHP: 30
-  currentHP: 30
-  maxMP: 30
-  currentMP: 30
-  takeBurnDamage: 0
+  maxHP: 60
+  currentHP: 60
+  maxMP: 5
+  currentMP: 5
   currectEffect: 0
   statusSprite: {fileID: 4836180336755260463}
   fire: {fileID: -949555466598364076, guid: faa7131e22c890743a043da1e6b115fa, type: 3}
