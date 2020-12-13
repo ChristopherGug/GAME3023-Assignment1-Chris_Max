@@ -49,9 +49,9 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", moveVector.sqrMagnitude);
 
         if (lookLeft)
-            transform.localScale = new Vector3 (-1, 1, 1);
+            transform.localScale = new Vector3 (-0.75f, 0.75f, 1);
         else
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(0.75f, 0.75f, 1);
     }
 
     // Update is called once per frame

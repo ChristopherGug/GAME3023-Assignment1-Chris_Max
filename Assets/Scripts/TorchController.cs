@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
-public class NewBehaviourScript : MonoBehaviour
+public class TorchController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Light2D torchLight;
     void Start()
     {
         
@@ -13,6 +14,6 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        torchLight.intensity = Mathf.PingPong(Time.time, 1f);
     }
 }
