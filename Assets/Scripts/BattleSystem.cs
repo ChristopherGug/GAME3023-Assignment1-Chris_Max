@@ -146,6 +146,13 @@ public class BattleSystem : MonoBehaviour
         currentState = BattleState.PLAYERTURN;
         battleText.text = "Your turn. Choose an action";
 
+        if (playerUnit.currentHP <= 0)
+        {
+            currentState = BattleState.LOSE;
+            StopAllCoroutines();
+            StartCoroutine(EndBattle());
+        }
+
         if (playerUnit.currectEffect == Effect.BURN)
         {
             playerUnit.TakeDamage(5);
@@ -379,7 +386,15 @@ public class BattleSystem : MonoBehaviour
         {
             enemyUnit.TakeDamage(5);
             enemyUI.SetHP(enemyUnit.currentHP, enemyUnit);
+
+            if(enemyUnit.currentHP <= 0)
+            {
+                currentState = BattleState.WIN;
+                StartCoroutine(EndBattle());
+            }
         }
+
+
 
         yield return new WaitForSeconds(1f);
 
@@ -388,28 +403,28 @@ public class BattleSystem : MonoBehaviour
             if (playerUnit.currectEffect == Effect.NONE)
             {
                 enemyAbilityUse = Random.Range(0, 8);
-                if (enemyAbilityUse <= 5)
+                if (enemyAbilityUse <= 4)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 1);
 
                     enemyUnit.PlaySound(0, 0, 0.5f);
                 }
-                else if (enemyAbilityUse == 6)
+                else if (enemyAbilityUse == 5)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
                     enemyUnit.PlaySound(1, 0.5f, 0.5f);
                 }
-                else if (enemyAbilityUse == 7)
+                else if (enemyAbilityUse == 6)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
                     enemyUnit.PlaySound(2, 0.5f, 0.5f);
                 }
-                else if (enemyAbilityUse == 8)
+                else if (enemyAbilityUse == 7)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 4);
@@ -423,21 +438,21 @@ public class BattleSystem : MonoBehaviour
             }
             else if (playerUnit.currectEffect == Effect.BURN)
             {
-                enemyAbilityUse = Random.Range(0, 10);
+                enemyAbilityUse = Random.Range(0, 11);
                 if (enemyAbilityUse <= 5)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 1);
                     enemyUnit.PlaySound(0, 0, 0.5f);
                 }
-                else if (enemyAbilityUse > 5 || enemyAbilityUse <= 7)
+                else if (enemyAbilityUse > 5 && enemyAbilityUse <= 7)
                 {
                     ability.Cast("Fire", Effect.BURN, Type.SPELL, Spell.FIRE, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 2);
                     spellAnimation.SetInteger("Spell", 2);
                     enemyUnit.PlaySound(1, 0.5f, 0.5f);
                 }
-                else if (enemyAbilityUse > 7 || enemyAbilityUse <= 9)
+                else if (enemyAbilityUse > 7 && enemyAbilityUse <= 9)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 4);
@@ -458,21 +473,21 @@ public class BattleSystem : MonoBehaviour
             }
             else if (playerUnit.currectEffect == Effect.WET)
             {
-                enemyAbilityUse = Random.Range(0, 12);
-                if (enemyAbilityUse <= 5)
+                enemyAbilityUse = Random.Range(0, 13);
+                if (enemyAbilityUse <= 4)
                 {
                     ability.Attack("Attack", 3, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 1);
                     enemyUnit.PlaySound(0, 0, 0.5f);
                 }
-                else if (enemyAbilityUse > 5 || enemyAbilityUse <= 6)
+                else if (enemyAbilityUse > 5 && enemyAbilityUse <= 7)
                 {
                     ability.Cast("Water", Effect.WET, Type.SPELL, Spell.WATER, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 3);
                     spellAnimation.SetInteger("Spell", 4);
                     enemyUnit.PlaySound(2, 0.5f, 0.5f);
                 }
-                else if (enemyAbilityUse > 6 || enemyAbilityUse <= 11)
+                else if (enemyAbilityUse > 7 && enemyAbilityUse <= 11)
                 {
                     ability.Cast("Lightning", Effect.NONE, Type.SPELL, Spell.LIGHTNING, enemyUnit, playerUnit);
                     enemyUnit.animator.SetInteger("TypeOfAbility", 4);
@@ -490,6 +505,7 @@ public class BattleSystem : MonoBehaviour
 
                 playerUI.SetHP(playerUnit.currentHP, playerUnit);
                 enemyUI.SetMP(enemyUnit.currentMP, enemyUnit);
+
             }
         }
         else if (enemyUnit.currentMP <= 0)
@@ -502,11 +518,9 @@ public class BattleSystem : MonoBehaviour
 
             enemyUnit.animator.SetInteger("TypeOfAbility", 1);
         }
+        Debug.Log("Enemy Attack Roll: " + enemyAbilityUse.ToString());
 
-        if (playerUnit.currentHP <= 0)
-        {
-            loss = true;
-        }
+
 
         if (enemyUnit.animator.GetInteger("TypeOfAttack") == 1)
         {
@@ -522,6 +536,10 @@ public class BattleSystem : MonoBehaviour
         spellAnimation.SetInteger("Spell", 0);
         enemyUnit.animator.SetInteger("TypeOfAbility", 0);
 
+        if (playerUnit.currentHP <= 0)
+        {
+            loss = true;
+        }
 
         if (loss)
         {
@@ -531,11 +549,6 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            if (playerUnit.currectEffect == Effect.BURN)
-            {
-                playerUnit.TakeDamage(5);
-            }
-
             PlayerTurn();
         }
     }
