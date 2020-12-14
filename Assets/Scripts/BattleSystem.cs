@@ -499,6 +499,8 @@ public class BattleSystem : MonoBehaviour
 
             playerUI.SetHP(playerUnit.currentHP, playerUnit);
             enemyUI.SetMP(enemyUnit.currentMP, enemyUnit);
+
+            enemyUnit.animator.SetInteger("TypeOfAbility", 1);
         }
 
         if (playerUnit.currentHP <= 0)
