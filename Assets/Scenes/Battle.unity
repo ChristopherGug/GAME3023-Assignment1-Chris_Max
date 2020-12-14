@@ -200,7 +200,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1701061411}
   m_HandleRect: {fileID: 0}
@@ -1473,7 +1473,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1018801319}
   m_HandleRect: {fileID: 0}
@@ -1918,7 +1918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6154127e73b930c4dbfdba45368a4606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFile: {fileID: 0}
   currentState: 0
   player: {fileID: 8452904813943415985, guid: fb3733067af035f42addcdf3edbfc6e3, type: 3}
   enemy1: {fileID: 8214181392081101390, guid: 91bc63af2e60d734d8add64bef2fa36b, type: 3}
@@ -2036,7 +2035,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 2137719447}
   m_HandleRect: {fileID: 0}
@@ -2863,7 +2862,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 2044600902}
   m_HandleRect: {fileID: 0}

@@ -390,11 +390,10 @@ public class BattleSystem : MonoBehaviour
             if(enemyUnit.currentHP <= 0)
             {
                 currentState = BattleState.WIN;
+                StopAllCoroutines();
                 StartCoroutine(EndBattle());
             }
         }
-
-
 
         yield return new WaitForSeconds(1f);
 
